@@ -1,0 +1,43 @@
+
+@extends('layout.head')
+@section('content')
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Create Jurnal</h5>
+
+            <!-- Vertical Form -->
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form class="g-3" action="{{route('store.jurnal')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="inputNanme4" class="form-label">Pencapaian Akhir</label>
+                                <input type="text" name="pencapaian_akhir" class="form-control @error('pencapaian_akhir')
+                                is-invalid
+                                @enderror" placeholder="Masukan Pencapaian Akhir">
+                                @error('pencapaian_akhir')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-12">
+                                <label for="inputNanme4" class="form-label">Bukti</label>
+                                <input type="file" name="bukti" class="form-control @error('bukti')
+                                is-invalid
+                                @enderror" placeholder="Masukan Bukti">
+                                @error('bukti')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="text-center g-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a class="btn btn-secondary">Reset</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+@endsection

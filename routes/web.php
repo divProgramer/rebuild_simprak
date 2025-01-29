@@ -7,6 +7,7 @@ use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\KelompokController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\JurnalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ use App\Http\Controllers\Auth\AuthController;
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/registrasi', [AuthController::class, 'regis'])->name('regis');
+Route::post('/registrasi', [AuthController::class, 'store'])->name('store.regis');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
@@ -38,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
         // siswa
         Route::prefix('siswa')->group(function () {
             Route::get('/', 'siswa')->name('data.siswa');
+            Route::get('/update/{id}', 'edit')->name('edit.siswa');
+            Route::post('/update/{id}', 'update')->name('update.siswa');
         });
 
         // fasilitator
@@ -81,6 +86,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', 'index')->name('data.instansi');
         Route::get('/create', 'create')->name('create.instansi');
         Route::post('/store', 'store')->name('store.instansi');
+    });
+
+    Route::controller(JurnalController::class)->middleware('auth')->prefix('jurnal')->group(function(){
+        Route::get('/', 'index')->name('data.jurnal');
+        Route::get('/create', 'create')->name('create.jurnal');
+        Route::post('/store', 'store')->name('store.jurnal');
     });
 });
 

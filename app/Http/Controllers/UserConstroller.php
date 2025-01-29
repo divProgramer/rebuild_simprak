@@ -7,6 +7,7 @@ use App\Models\Guru;
 use App\Models\Instansi;
 use App\Models\Kelompok;
 use App\Models\Sekolah;
+use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,31 @@ class UserConstroller extends Controller
 {
     // Siswa
     public function siswa(Request $request){
-        return view('user.siswa');
+        $data = Siswa::all();
+        return view('user.siswa', compact('data'));
+    }
+
+    public function edit($id){
+        $data = Siswa::find($id);
+        $kelompok = Kelompok::all();
+        $instansi = Instansi::all();
+
+        return view('user.update.siswa', compact('data', 'kelompok', 'instansi'));
+    }
+
+    public function update(Request $request, $id){
+        $data = Siswa::find($id);
+        $request->validate([
+            'instansi' =>'required',
+            'kelompok' => 'required'
+        ]);
+
+        $data->update([
+            'instansi_id' => $request->instansi,
+            'kelompok_id' => $request->kelompok
+        ]);
+
+        return redirect()->route('data.siswa')->with('success', 'Data siswa berhasil diupdate');
     }
 
     // Fasilitator

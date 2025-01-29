@@ -142,54 +142,63 @@
             </a>
         </li><!-- End Dashboard Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>Pengguna</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="{{route('data.siswa')}}">
-                    <i class="bi bi-circle"></i><span>Siswa</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('data.guru')}}">
-                    <i class="bi bi-circle"></i><span>Guru</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('data.fasilitator')}}">
-                    <i class="bi bi-circle"></i><span>Fasilitator</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Tables Nav -->
+        @can('isAdmin')
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>Pengguna</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{route('data.siswa')}}">
+                        <i class="bi bi-circle"></i><span>Siswa</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('data.guru')}}">
+                        <i class="bi bi-circle"></i><span>Guru</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('data.fasilitator')}}">
+                        <i class="bi bi-circle"></i><span>Fasilitator</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('data.kelompok')}}">
+                <i class="ri-group-line"></i>
+                <span>Kelompok</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('data.jurusan')}}">
+                <i class="ri-stack-line"></i>
+                <span>Jurusan</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('data.instansi')}}">
+                <i class="ri-hotel-line"></i>
+                <span>Instansi</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('data.sekolah')}}">
+                <i class="ri-home-8-line"></i>
+                <span>Sekolah</span>
+                </a>
+            </li>
+        @endcan
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{route('data.kelompok')}}">
-            <i class="ri-group-line"></i>
-            <span>Kelompok</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{route('data.jurusan')}}">
-            <i class="ri-stack-line"></i>
-            <span>Jurusan</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{route('data.instansi')}}">
-            <i class="ri-hotel-line"></i>
-            <span>Instansi</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{route('data.sekolah')}}">
-            <i class="ri-home-8-line"></i>
-            <span>Sekolah</span>
+            <a class="nav-link collapsed" href="{{route('data.jurnal')}}">
+            <i class="ri-file-list-3-line"></i>
+            <span>Jurnal</span>
             </a>
         </li>
 
