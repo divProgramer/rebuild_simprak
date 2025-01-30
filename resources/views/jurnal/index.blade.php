@@ -58,7 +58,7 @@
                             @endcan
                             @can('isFasilitator')
                                 <td>
-                                    <form action="{{ route('jurnal.delete', $row->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                    <form action="" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>

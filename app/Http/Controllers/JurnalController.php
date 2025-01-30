@@ -2,15 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jurnal;
 use App\Models\Siswa;
+use App\Models\Jurnal;
+use App\Models\Fasilitator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class JurnalController extends Controller
 {
     public function index(){
-        $data = Jurnal::all();
+        $user = Auth::user();
+        $data = collect(); // Inisialisasi koleksi kosong
+
+        switch ($user->role) {
+            case 'siswa':
+                // Ambil data jurnal untuk siswa yang login
+                $data = Jurnal::where('user_id', $user->id)->get();
+                break;
+
+            case 'guru':
+                // Ambil semua data jurnal
+                $data = Jurnal::all();
+                break;
+
+            case 'fasilitator':
+                // Ambil data siswa berdasarkan kelompok_id fasilitator
+                $fasilitator = Fasilitator::where('user_id', $user->id)->first();
+
+                $siswa = Siswa::where('kelompok_id', $fasilitator->kelompok_id)->get();
+                // Ambil data jurnal berdasarkan user_id dari siswa yang terkait
+                $data = Jurnal::whereIn('user_id', $siswa->pluck('user_id'))->get();
+                break;
+
+            default:
+                // Jika role tidak dikenali, redirect atau beri pesan error
+                return redirect()->route('home')->with('error', 'Akses tidak valid.');
+        }
+
+        // Tampilkan view dengan data yang sudah diambil
         return view('jurnal.index', compact('data'));
     }
 
