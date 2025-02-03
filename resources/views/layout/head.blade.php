@@ -195,6 +195,15 @@
             </li>
         @endcan
 
+        @can('isFasilitator')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('data.fasilitator.siswa')}}">
+                <i class="ri-file-list-3-line"></i>
+                <span>Siswa</span>
+                </a>
+            </li>
+        @endcan
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{route('data.jurnal')}}">
             <i class="ri-file-list-3-line"></i>

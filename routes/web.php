@@ -7,6 +7,7 @@ use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\KelompokController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\FasilitatorController;
 use App\Http\Controllers\JurnalController;
 
 /*
@@ -88,10 +89,19 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store', 'store')->name('store.instansi');
     });
 
+    // jurnal
     Route::controller(JurnalController::class)->middleware('auth')->prefix('jurnal')->group(function(){
         Route::get('/', 'index')->name('data.jurnal');
         Route::get('/create', 'create')->name('create.jurnal');
         Route::post('/store', 'store')->name('store.jurnal');
+        Route::get('/view/{id}', 'view')->name('view.jurnal');
+        Route::post('/update/{id}', 'update')->name('update.jurnal');
+    });
+
+    // fasilitator halaman
+    Route::controller(FasilitatorController::class)->prefix('fasilitator')->group(function(){
+        Route::get('/siswa', 'index')->name('data.fasilitator.siswa');
+        Route::get('/siswa/view/{id}', 'view')->name('view.fasilitator.siswa');
     });
 });
 

@@ -56,4 +56,8 @@ class User extends Authenticatable
     public function siswa(){
         return $this->hasMany(Siswa::class, 'user_id', 'id');
     }
+
+    public function siswas(){
+        return $this->belongsTo(Siswa::class, 'id', 'user_id');
+    }
 }

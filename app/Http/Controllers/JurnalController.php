@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Jurnal;
 use App\Models\Fasilitator;
@@ -17,18 +18,20 @@ class JurnalController extends Controller
         switch ($user->role) {
             case 'siswa':
                 // Ambil data jurnal untuk siswa yang login
+                $siswa = Siswa::where('user_id', $user->id)->first();
+
                 $data = Jurnal::where('user_id', $user->id)->get();
                 break;
 
             case 'guru':
                 // Ambil semua data jurnal
-                $data = Jurnal::all();
+                $guru = Guru::where('user_id', $user->id)->first();
+                $data = Jurnal::where('sekolah_id', $guru->sekolah_id)->get();
                 break;
 
             case 'fasilitator':
                 // Ambil data siswa berdasarkan kelompok_id fasilitator
                 $fasilitator = Fasilitator::where('user_id', $user->id)->first();
-
                 $siswa = Siswa::where('kelompok_id', $fasilitator->kelompok_id)->get();
                 // Ambil data jurnal berdasarkan user_id dari siswa yang terkait
                 $data = Jurnal::whereIn('user_id', $siswa->pluck('user_id'))->get();
@@ -36,11 +39,14 @@ class JurnalController extends Controller
 
             default:
                 // Jika role tidak dikenali, redirect atau beri pesan error
-                return redirect()->route('home')->with('error', 'Akses tidak valid.');
+                return redirect()->route('data.jurnal')->with('error', 'Akses tidak valid.');
         }
 
         // Tampilkan view dengan data yang sudah diambil
-        return view('jurnal.index', compact('data'));
+        return view('jurnal.index', compact(
+            'data',
+            'siswa'
+        ));
     }
 
     public function create(){
@@ -48,6 +54,7 @@ class JurnalController extends Controller
     }
 
     public function store(Request $request){
+
         $request->validate([
             'pencapaian_akhir' => 'required',
             'bukti' => 'required|mimes:jpg,jpeg,png|max:2024',
@@ -60,6 +67,7 @@ class JurnalController extends Controller
             'instansi_id' => $siswa->instansi_id,
             'sekolah_id' => $siswa->sekolah_id,
             'catatan' => $request->pencapaian_akhir,
+            'status' => false,
             'bukti' => $request->file('bukti')->store('bukti-jurnal'),
         ]);
 
@@ -77,5 +85,24 @@ class JurnalController extends Controller
         }
 
         return redirect()->route('data.jurnal')->with('success', 'Jurnal Berhasil Ditambahkan');
+    }
+
+    public function view($id){
+        $data = Jurnal::find($id);
+        return view('jurnal.view', compact('data'));
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+            'status' => 'required',
+            'catatan' => 'required',
+        ]);
+
+        $data = Jurnal::find($id);
+        $data->update([
+            'status' => $request->status,
+            'pencapaian_akhir' => $request->catatan,
+        ]);
+        return redirect()->route('data.jurnal')->with('success', 'Jurnal Berhasil Diperbarui');
     }
 }

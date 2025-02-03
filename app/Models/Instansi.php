@@ -18,4 +18,8 @@ class Instansi extends Model
     public function jurnal(){
         return $this->hasMany(Jurnal::class, 'instansi_id', 'id');
     }
+
+    public function siswa(){
+        return $this->hasMany(Siswa::class, 'instansi_id', 'id');
+    }
 }

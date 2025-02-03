@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('catatan');
             $table->text('pencapaian_akhir')->nullable();
             $table->string('bukti', 100);
+            $table->boolean('status');
             $table->timestamp('waktu_pulang')->nullable();
             $table->timestamps();
         });

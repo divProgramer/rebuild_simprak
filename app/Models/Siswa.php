@@ -22,4 +22,16 @@ class Siswa extends Model
     public function jurusan(){
         return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
     }
+
+    public function kelompok(){
+        return $this->belongsTo(Kelompok::class, 'kelompok_id', 'id');
+    }
+
+    public function instansi(){
+        return $this->belongsTo(Instansi::class, 'instansi_id', 'id');
+    }
+
+    public function user(){
+        return $this->hasMany(User::class, 'id', 'user_id');
+    }
 }
