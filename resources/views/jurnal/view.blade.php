@@ -128,7 +128,6 @@
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary">Konfirmasi</button>
                                     </div>
-                                    </div>
                                 </div>
                             </form>
                         </div>

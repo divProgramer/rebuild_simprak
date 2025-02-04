@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Jurnal;
@@ -19,12 +20,15 @@ class JurnalController extends Controller
             case 'siswa':
                 // Ambil data jurnal untuk siswa yang login
                 $siswa = Siswa::where('user_id', $user->id)->first();
-
+                $sudahMengisi = Jurnal::whereDate('created_at', Carbon::today())->exists();
                 $data = Jurnal::where('user_id', $user->id)->get();
                 break;
 
             case 'guru':
                 // Ambil semua data jurnal
+
+                $siswa = Siswa::where('user_id', $user->id)->first();
+                $sudahMengisi = Jurnal::whereDate('created_at', Carbon::today())->exists();
                 $guru = Guru::where('user_id', $user->id)->first();
                 $data = Jurnal::where('sekolah_id', $guru->sekolah_id)->get();
                 break;
@@ -33,6 +37,7 @@ class JurnalController extends Controller
                 // Ambil data siswa berdasarkan kelompok_id fasilitator
                 $fasilitator = Fasilitator::where('user_id', $user->id)->first();
                 $siswa = Siswa::where('kelompok_id', $fasilitator->kelompok_id)->get();
+                $sudahMengisi = Jurnal::whereDate('created_at', Carbon::today())->exists();
                 // Ambil data jurnal berdasarkan user_id dari siswa yang terkait
                 $data = Jurnal::whereIn('user_id', $siswa->pluck('user_id'))->get();
                 break;
@@ -45,7 +50,8 @@ class JurnalController extends Controller
         // Tampilkan view dengan data yang sudah diambil
         return view('jurnal.index', compact(
             'data',
-            'siswa'
+            'siswa',
+            'sudahMengisi'
         ));
     }
 

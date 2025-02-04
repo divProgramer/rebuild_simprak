@@ -18,7 +18,11 @@
                     <a href="{{ route('create.jurnal') }}" class="btn btn-secondary" style="pointer-events: none;">Create</a>
                     <p class="text-warning">Anda belum terdaftar di kelompok harap konfirmasi ke guru pembimbing untuk menentukan kelompok</p>
                 @else
-                    <a href="{{ route('create.jurnal') }}" class="btn btn-success">Create</a>
+                    @if (!$sudahMengisi)
+                        <a href="{{ route('create.jurnal') }}" class="btn btn-outline-success">Create</a>
+                    @else
+                        <a href="" onclick="alert('Anda sudah mengisi jurnal')" class="btn btn-outline-secondary">Create</a>
+                    @endif
                 @endif
             @endcan
 
@@ -33,9 +37,9 @@
                         <th scope="col">Bukti</th>
                         <th scope="col">Waktu Pulang</th>
                         <th scope="col">Catatan</th>
-                        @can('isSiswa')
+                        {{-- @can('isSiswa') --}}
                             <th class="text-center">Status</th>
-                        @endcan
+                        {{-- @endcan --}}
                         @can('isFasilitator')
                             <th class="text-center">Action</th>
                         @endcan
@@ -61,28 +65,29 @@
                             </td>
                             <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y H:i') }}</td>
                             <td>{{ $row->pencapaian_akhir }}</td>
-                            @can('isSiswa')
+                            @canany(['isSiswa', 'isFasilitator'])
                                 @if ($row->status == false)
                                     <td class="text-center">
                                         <button class="btn btn-outline-danger" disabled>Menunggu konfirmasi</button>
                                     </td>
                                 @elseif ($row->status == true)
+                                @can('isSiswa')
                                     <td class="text-center">
                                         <button class="btn btn-outline-success" disabled>Disetujui</button>
                                     </td>
+                                @endcan
+                                @can('isFasilitator')
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-outline-success" style="pointer-events: none;">Telah Di konfirmasi</a>
+                                    </td>
+                                @endcan
                                 @endif
                             @endcan
 
                             @can('isFasilitator')
-                                @if ($row->status == true)
-                                    <td class="text-center">
-                                        <a href="" class="btn btn-outline-success" style="pointer-events: none;">Telah Di konfirmasi</a>
-                                    </td>
-                                @elseif ($row->status == false)
-                                    <td class="text-center">
-                                        <a href="{{route('view.jurnal', $row->id)}}" class="btn btn-outline-primary">View</a>
-                                    </td>
-                                @endif
+                                <td class="text-center">
+                                    <a href="{{route('view.jurnal', $row->id)}}" class="btn btn-outline-primary">View</a>
+                                </td>
                             @endcan
                         </tr>
                     @endforeach
