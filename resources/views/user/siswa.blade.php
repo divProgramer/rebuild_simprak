@@ -11,7 +11,7 @@
             <p>{{ $message }}</p>
           </div>
           @endif
-        <h5 class="card-title">Data Fasilitator</h5>
+        <h5 class="card-title">Data Siswa</h5>
         <a href="{{ route('create.guru') }}" class="btn btn-success">Create</a>
 
 
