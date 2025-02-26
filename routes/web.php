@@ -26,7 +26,7 @@ use App\Http\Controllers\JurnalController;
 // });
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login.data');
 Route::get('/registrasi', [AuthController::class, 'regis'])->name('regis');
 Route::post('/registrasi', [AuthController::class, 'store'])->name('store.regis');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
