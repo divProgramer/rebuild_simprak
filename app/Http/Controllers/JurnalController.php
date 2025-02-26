@@ -81,7 +81,7 @@ class JurnalController extends Controller
         if ($request->hasFile('bukti')) {
             $file = $request->file('bukti');
             $uniq = uniqid();
-            $filename = date('mdY') . $uniq . '_' . $file->getClientOriginalName();
+            $filename = date('mdY') . $uniq . '_' . $file->extension();
 
             // Menyimpan file ke storage
             $path = $file->storeAs('bukti', $filename, 'public');
