@@ -37,7 +37,7 @@ class JurnalController extends Controller
                 // Ambil data siswa berdasarkan kelompok_id fasilitator
                 $fasilitator = Fasilitator::where('user_id', $user->id)->first();
                 $siswa = Siswa::where('kelompok_id', $fasilitator->kelompok_id)->get();
-                $sudahMengisi = Jurnal::whereDate('created_at', Carbon::today())->exists();
+                // $sudahMengisi = Jurnal::whereDate('created_at', Carbon::today())->exists();
                 // Ambil data jurnal berdasarkan user_id dari siswa yang terkait
                 $data = Jurnal::whereIn('user_id', $siswa->pluck('user_id'))->get();
                 break;

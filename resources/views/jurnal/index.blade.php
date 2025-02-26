@@ -18,11 +18,11 @@
                     <a href="{{ route('create.jurnal') }}" class="btn btn-secondary" style="pointer-events: none;">Create</a>
                     <p class="text-warning">Anda belum terdaftar di kelompok harap konfirmasi ke guru pembimbing untuk menentukan kelompok</p>
                 @else
-                    @if (!$sudahMengisi)
+                    {{-- @if (!$sudahMengisi) --}}
                         <a href="{{ route('create.jurnal') }}" class="btn btn-outline-success">Create</a>
-                    @else
-                        <a href="" onclick="alert('Anda sudah mengisi jurnal')" class="btn btn-outline-secondary">Create</a>
-                    @endif
+                    {{-- @else --}}
+                        {{-- <a href="" onclick="alert('Anda sudah mengisi jurnal')" class="btn btn-outline-secondary">Create</a>
+                    @endif --}}
                 @endif
             @endcan
 
