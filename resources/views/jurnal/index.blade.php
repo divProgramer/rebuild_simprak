@@ -60,7 +60,7 @@
                                 @if (empty($row->bukti))
                                     Gambar tidak terinput
                                 @else
-                                    <img src="{{ Storage::url($row->bukti) }}" width="50px" alt="Bukti Jurnal">
+                                    <img src="{{ Storage::disk('local')-?url($row->bukti) }}" width="50px" alt="Bukti Jurnal">
                                 @endif
                             </td>
                             <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y H:i') }}</td>
