@@ -117,7 +117,7 @@
                 <a class="dropdown-item d-flex align-items-center" href="#" onclick="confirmLogout()">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Sign Out</span>
-                    <form action="/logout" method="post" id="logout">
+                    <form action="{{route('logout')}}" method="post" id="logout">
                     @csrf
                     </form>
                 </a>
